@@ -1,0 +1,80 @@
+.wrapper {
+  height: 100vh;
+  margin: 0px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: #00f260; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #0575e6, #00f260); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #0575e6,
+    #00f260
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.loginboxwrapper {
+  border: 2px solid black;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2em 0;
+  border-radius: 0.9em;
+  background-color: rgb(236, 236, 162);
+}
+
+.margin {
+  margin: 1em 0;
+}
+
+.title {
+  margin-bottom: 1em;
+  font-size: 2em;
+  font-weight: 700;
+}
+
+.btn {
+  border: 1px solid black !important;
+  color: black !important;
+}
+
+.field {
+  width: 70%;
+  background-color: white !important;
+}
+
+.error {
+  color: red;
+  margin-top: 2px;
+}
+
+/* signup success style */
+
+.welcomeText {
+  font-size: 3em;
+  font-weight: 700;
+  margin-bottom: 0.6em;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.button {
+  border: 1px solid black !important;
+  color: black !important;
+  padding: 1em 2em;
+}
+
+.button:hover {
+  background-color: black;
+  color: white !important;
+}
+
+/* bottom text */
+.bottomText {
+  font-size: large;
+  margin-top: 1em;
+}

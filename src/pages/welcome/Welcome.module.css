@@ -1,0 +1,37 @@
+.wrapper {
+  height: 100vh;
+  margin: 0px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: #2980b9; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #2980b9, #6dd5fa, #ffffff); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #2980b9,
+    #6dd5fa,
+    #ffffff
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.welcomeText {
+  font-size: 3em;
+  font-weight: 700;
+  margin-bottom: 0.6em;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.button {
+  border: 1px solid black !important;
+  color: black !important;
+  padding: 1em 2em;
+}
+
+.button:hover {
+  background-color: black;
+  color: white !important;
+}
