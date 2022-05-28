@@ -69,6 +69,7 @@ const Signup = () => {
             variant="filled"
             size="small"
             required={true}
+            type="password"
             placeholder="Enter password"
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -80,6 +81,7 @@ const Signup = () => {
             value={confirmPassword}
             variant="filled"
             size="small"
+            type="password"
             required={true}
             placeholder="Enter Confirm Password"
             onChange={(e) => setConfirmPassword(e.target.value)}
