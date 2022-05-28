@@ -3,9 +3,9 @@ import React, { createContext, useState } from "react";
 import { app, database } from "../firebase";
 import { set, ref, get, onValue } from "firebase/database";
 
-export const UserContext = createContext();
+export const PetSitterContext = createContext();
 
-const UserContextProvider = ({ children }) => {
+const PetSitterContextProvider = ({ children }) => {
   const auth = getAuth(app);
   const [currentUser, setCurrentUser] = useState("");
 
@@ -93,7 +93,7 @@ const UserContextProvider = ({ children }) => {
   };
 
   const value = { signUpUser, loginUser, currentUser, addUser, listUser, deleteUser, editUser, changeActive };
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+  return <PetSitterContext.Provider value={value}>{children}</PetSitterContext.Provider>;
 };
 
-export default UserContextProvider;
+export default PetSitterContextProvider;

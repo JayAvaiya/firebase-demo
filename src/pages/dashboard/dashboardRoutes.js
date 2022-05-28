@@ -3,6 +3,7 @@ import ListUser from "./listuser/ListUser";
 
 import ListIcon from "@mui/icons-material/List";
 import AddIcon from "@mui/icons-material/Add";
+// import AddPetSitter from "./petsitter/addpetsitter/AddPetSitter";
 
 const routes = [
   {
@@ -17,6 +18,12 @@ const routes = [
     text: "List Users",
     icon: ListIcon,
   },
+  // {
+  //   tag: "addPetSitter",
+  //   component: AddPetSitter,
+  //   text: "Add Pet Sitter",
+  //   icon: AddIcon,
+  // },
 ];
 
 export default routes;

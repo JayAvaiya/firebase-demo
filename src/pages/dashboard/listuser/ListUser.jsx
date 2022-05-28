@@ -114,8 +114,14 @@ const ListUser = () => {
                   <FormGroup>
                     <Switch
                       checked={row.active}
-                      onChange={(e) => {
-                        changeActive(row.id, e.target.checked);
+                      onChange={async (e) => {
+                        const response = await changeActive(row.id, e.target.checked);
+                        if (response.status === "success") {
+                          toast.success(response.message);
+                        }
+                        if (response.status === "unsuccess") {
+                          toast.error(response.message);
+                        }
                         setUserList(
                           userList.map((item) => (item.id === row.id ? { ...item, active: e.target.checked } : item))
                         );
