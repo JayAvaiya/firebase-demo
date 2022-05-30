@@ -1,0 +1,10 @@
+.btn {
+  border: 1px solid blue !important;
+  color: blue !important;
+}
+
+.btnRight {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1em 0px;
+}

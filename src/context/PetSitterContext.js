@@ -9,28 +9,9 @@ const PetSitterContextProvider = ({ children }) => {
   const auth = getAuth(app);
   const [currentUser, setCurrentUser] = useState("");
 
-  const loginUser = async (email, password) => {
+  const listPetSitters = async (callback) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      setCurrentUser(email);
-      return { status: "success", message: "User Created Successfully" };
-    } catch (error) {
-      return { status: "unsuccess", message: error.message };
-    }
-  };
-
-  const signUpUser = async (email, password) => {
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      return { status: "success", message: "User Created Successfully" };
-    } catch (error) {
-      return { status: "unsuccess", message: error.message };
-    }
-  };
-
-  const listUser = async (callback) => {
-    try {
-      const userRef = ref(database, `Users/`);
+      const userRef = ref(database, `Petsitter/`);
       onValue(userRef, (snapshot) => {
         const data = snapshot.val();
         callback(data);
@@ -41,9 +22,9 @@ const PetSitterContextProvider = ({ children }) => {
     }
   };
 
-  const deleteUser = async (id) => {
+  const deletePetSitter = async (id) => {
     try {
-      await set(ref(database, `Users/${id}`), null);
+      await set(ref(database, `Petsitter/${id}`), null);
       return { status: "success", message: "User Deleted Successfully" };
     } catch (error) {
       console.log(error);
@@ -51,15 +32,16 @@ const PetSitterContextProvider = ({ children }) => {
     }
   };
 
-  const editUser = async (userInfo) => {
+  const editPetSitter = async (userInfo) => {
     try {
-      const { id, username, email, mobileno, age, active } = userInfo;
-      set(ref(database, `Users/${id}`), {
-        username,
+      const { id, active, verified, preferredPet, email, mobileno, username } = userInfo;
+      set(ref(database, `Petsitter/${id}`), {
+        active,
+        verified,
+        preferredPet,
         email,
         mobileno,
-        age,
-        active,
+        username,
       });
       return { status: "success", message: "User Edited Successfully" };
     } catch (error) {
@@ -67,15 +49,16 @@ const PetSitterContextProvider = ({ children }) => {
     }
   };
 
-  const addUser = async (userInfo) => {
+  const addPetSitter = async (userInfo) => {
     try {
-      const { userId, username, email, mobileno, age, active } = userInfo;
-      set(ref(database, `Users/${userId}`), {
+      const { userId, username, email, mobileno, active, verified, preferredPet } = userInfo;
+      set(ref(database, `Petsitter/${userId}`), {
         username,
         email,
         mobileno,
-        age,
+        verified,
         active,
+        preferredPet,
       });
       return { status: "success", message: "User Added Successfully" };
     } catch (error) {
@@ -85,14 +68,45 @@ const PetSitterContextProvider = ({ children }) => {
 
   const changeActive = async (userId, checkOrNot) => {
     try {
-      set(ref(database, `Users/${userId}/active`), checkOrNot);
+      set(ref(database, `Petsitter/${userId}/active`), checkOrNot);
       return { status: "success", message: "Status Changed Successfully" };
     } catch (error) {
       return { status: "unsuccess", message: error.message };
     }
   };
 
-  const value = { signUpUser, loginUser, currentUser, addUser, listUser, deleteUser, editUser, changeActive };
+  const changeVerified = async (userId, checkOrNot) => {
+    try {
+      set(ref(database, `Petsitter/${userId}/verified`), checkOrNot);
+      return { status: "success", message: "Status Changed Successfully" };
+    } catch (error) {
+      return { status: "unsuccess", message: error.message };
+    }
+  };
+
+  const countPetSitters = async (callback) => {
+    try {
+      const userRef = ref(database, `Petsitter/`);
+      onValue(userRef, (snapshot) => {
+        const data = snapshot.val();
+        const count = Object.keys(data).length;
+        callback(count);
+      });
+    } catch (error) {
+      console.log(error);
+      return { status: "unsuccess", message: error.message };
+    }
+  };
+
+  const value = {
+    listPetSitters,
+    editPetSitter,
+    addPetSitter,
+    changeActive,
+    deletePetSitter,
+    changeVerified,
+    countPetSitters,
+  };
   return <PetSitterContext.Provider value={value}>{children}</PetSitterContext.Provider>;
 };
 

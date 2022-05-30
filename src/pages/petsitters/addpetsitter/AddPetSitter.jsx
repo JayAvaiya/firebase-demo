@@ -1,18 +1,20 @@
 import { Button, TextField } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { PetSitterContext } from "../../../context/PetSitterContext";
 import { UserContext } from "../../../context/UserContext";
-import style from "./AddUser.module.css";
+import style from "./AddPetSitter.module.css";
 
-const AddUser = () => {
-  const [userInfo, setUserInfo] = useState({
+const AddPetSitter = ({ setAdd }) => {
+  const [petSitterInfo, setPetSitterInfo] = useState({
     username: "",
     email: "",
     age: 0,
     active: true,
-    mobileno: "",
+    verified: false,
+    preferredPet: "",
   });
-  const { addUser, currentUser } = useContext(UserContext);
+  const { addPetSitter } = useContext(PetSitterContext);
   const [error, setError] = useState({});
 
   const [addUserSuccess, setAddUserSuccess] = useState(false);
@@ -21,7 +23,7 @@ const AddUser = () => {
     e.preventDefault();
     setError({});
     const userId = Math.floor(100000 + Math.random() * 900000);
-    const response = await addUser({ userId, ...userInfo });
+    const response = await addPetSitter({ userId, ...petSitterInfo });
     if (response.status === "success") {
       setAddUserSuccess(true);
     } else {
@@ -39,24 +41,36 @@ const AddUser = () => {
     <div className={style.wrapper}>
       {addUserSuccess ? (
         <>
-          <div className={style.welcomeText}>{`User ${userInfo.username} Added Successfully`}</div>
+          <Button variant="outlined" type="submit" className={style.btn} onClick={() => setAdd()}>
+            Back
+          </Button>
+          <div className={style.welcomeText}>{`User ${petSitterInfo.username} Added Successfully`}</div>
           <Button variant="outlined" className={style.button} onClick={() => setAddUserSuccess(false)}>
-            Add Another User
+            Add Another Pet Sitter
           </Button>
         </>
       ) : (
         <form className={style.loginboxwrapper} onSubmit={handleFormSubmission}>
-          <div className={style.title}>Add User</div>
+          <Button
+            variant="outlined"
+            type="submit"
+            className={style.btn}
+            style={{ alignSelf: "flex-start", marginLeft: "1em" }}
+            onClick={() => setAdd()}
+          >
+            Back
+          </Button>
+          <div className={style.title}>Add Pet Sitter</div>
           {error.userAdditionError && <p className={style.error}>{error?.message || "Something went wrong!"}</p>}
           <TextField
             hiddenLabel
             id="filled-hidden-label-small"
             className={style.field}
-            value={userInfo.username}
+            value={petSitterInfo.username}
             variant="filled"
             size="small"
             required={true}
-            onChange={(e) => setUserInfo({ ...userInfo, username: e.target.value })}
+            onChange={(e) => setPetSitterInfo({ ...petSitterInfo, username: e.target.value })}
             placeholder="Enter Username"
           />
           <div className={style.margin}></div>
@@ -64,37 +78,36 @@ const AddUser = () => {
             hiddenLabel
             id="filled-hidden-label-small"
             className={style.field}
-            value={userInfo.email}
+            value={petSitterInfo.email}
             variant="filled"
             size="small"
             required={true}
             placeholder="Enter Email"
-            onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
+            onChange={(e) => setPetSitterInfo({ ...petSitterInfo, email: e.target.value })}
           />
           <div className={style.margin}></div>
           <TextField
             hiddenLabel
             id="filled-hidden-label-small"
             className={style.field}
-            value={userInfo.mobileno}
+            value={petSitterInfo.mobileno}
             variant="filled"
             size="small"
             required={true}
             placeholder="Enter Mobile"
-            onChange={(e) => setUserInfo({ ...userInfo, mobileno: e.target.value })}
+            onChange={(e) => setPetSitterInfo({ ...petSitterInfo, mobileno: e.target.value })}
           />
           <div className={style.margin}></div>
           <TextField
             hiddenLabel
             id="filled-hidden-label-small"
             className={style.field}
-            value={userInfo.age}
-            type="number"
+            value={petSitterInfo.preferredPet}
             variant="filled"
             size="small"
             required={true}
-            placeholder="Enter Age"
-            onChange={(e) => setUserInfo({ ...userInfo, age: e.target.value })}
+            placeholder="Preferred Pet"
+            onChange={(e) => setPetSitterInfo({ ...petSitterInfo, preferredPet: e.target.value })}
           />
           <div className={style.margin}></div>
 
@@ -107,4 +120,4 @@ const AddUser = () => {
   );
 };
 
-export default AddUser;
+export default AddPetSitter;

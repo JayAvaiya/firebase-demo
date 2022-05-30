@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import React, { createContext, useState } from "react";
 import { app, database } from "../firebase";
 import { set, ref, get, onValue } from "firebase/database";
@@ -92,7 +92,41 @@ const UserContextProvider = ({ children }) => {
     }
   };
 
-  const value = { signUpUser, loginUser, currentUser, addUser, listUser, deleteUser, editUser, changeActive };
+  const countUsers = async (callback) => {
+    try {
+      const userRef = ref(database, `Users/`);
+      onValue(userRef, (snapshot) => {
+        const data = snapshot.val();
+        const count = Object.keys(data).length;
+        callback(count);
+      });
+    } catch (error) {
+      console.log(error);
+      return { status: "unsuccess", message: error.message };
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.log(error);
+      return { status: "unsuccess", message: error.message };
+    }
+  };
+
+  const value = {
+    signUpUser,
+    loginUser,
+    currentUser,
+    addUser,
+    listUser,
+    deleteUser,
+    editUser,
+    changeActive,
+    countUsers,
+    logout,
+  };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 

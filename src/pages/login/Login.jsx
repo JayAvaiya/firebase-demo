@@ -39,7 +39,7 @@ const Login = () => {
 
   return (
     <div className={style.wrapper}>
-      <form className={style.loginboxwrapper} onSubmit={handleFormSubmission}>
+      <form className={style.loginboxwrapper} autocomplete="off" onSubmit={handleFormSubmission}>
         <div className={style.title}>Login</div>
         {error.LoginError && <p className={style.error}>{error?.message || "Something went wrong!"}</p>}
         <TextField
@@ -48,6 +48,7 @@ const Login = () => {
           className={style.field}
           value={email}
           variant="filled"
+          autocomplete="off"
           size="small"
           required={true}
           placeholder="Enter Email"
@@ -59,6 +60,7 @@ const Login = () => {
           id="filled-hidden-label-small"
           className={style.field}
           value={password}
+          autocomplete="off"
           variant="filled"
           size="small"
           type="password"

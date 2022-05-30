@@ -14,10 +14,14 @@ import { UserContext } from "../../../context/UserContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EditUser from "../adduser/EditUser";
+import AddUser from "../adduser/AddUser";
 
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
+import { Button, Dialog } from "@mui/material";
+
+import style from "./ListUser.module.css";
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -37,6 +41,7 @@ const ListUser = () => {
   const [userList, setUserList] = useState([]);
   const [edit, setEdit] = useState(false);
   const [selectedUser, setSelectedUser] = useState({});
+  const [add, setAdd] = useState(false);
 
   useEffect(() => {
     listUser((userList) => {
@@ -87,65 +92,74 @@ const ListUser = () => {
 
   return edit ? (
     <EditUser selectedUser={selectedUser} changeEdit={changeEdit} />
+  ) : add ? (
+    <AddUser setAdd={setAdd} />
   ) : (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Username</TableCell>
-            <TableCell align="right">Email</TableCell>
-            <TableCell align="right">Age</TableCell>
-            <TableCell align="right">MobileNo</TableCell>
-            <TableCell align="right">Active</TableCell>
-            <TableCell align="right">Action</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {userList.map((row) => (
-            <TableRow key={row.id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-              <TableCell component="th" scope="row">
-                {row.username}
-              </TableCell>
-              <TableCell align="right">{row.email}</TableCell>
-              <TableCell align="right">{row.age}</TableCell>
-              <TableCell align="right">{row.mobileno}</TableCell>
-              <TableCell align="right">
-                <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <FormGroup>
-                    <Switch
-                      checked={row.active}
-                      onChange={async (e) => {
-                        const response = await changeActive(row.id, e.target.checked);
-                        if (response.status === "success") {
-                          toast.success(response.message);
-                        }
-                        if (response.status === "unsuccess") {
-                          toast.error(response.message);
-                        }
-                        setUserList(
-                          userList.map((item) => (item.id === row.id ? { ...item, active: e.target.checked } : item))
-                        );
-                      }}
-                    />
-                  </FormGroup>
-                </div>
-              </TableCell>
-              <TableCell align="right">
-                <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <div onClick={() => editRecord(row.id)}>
-                    <EditIcon />
-                  </div>
-                  <div onClick={() => deleteRecord(row.id)}>
-                    <DeleteIcon />
-                  </div>
-                </div>
-              </TableCell>
+    <>
+      <div className={style.btnRight}>
+        <Button variant="outlined" type="submit" className={style.btn} onClick={() => setAdd(true)}>
+          Add User
+        </Button>
+      </div>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Username</TableCell>
+              <TableCell align="right">Email</TableCell>
+              <TableCell align="right">Age</TableCell>
+              <TableCell align="right">MobileNo</TableCell>
+              <TableCell align="right">Active</TableCell>
+              <TableCell align="right">Action</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <ToastContainer />
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {userList.map((row) => (
+              <TableRow key={row.id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <TableCell component="th" scope="row">
+                  {row.username}
+                </TableCell>
+                <TableCell align="right">{row.email}</TableCell>
+                <TableCell align="right">{row.age}</TableCell>
+                <TableCell align="right">{row.mobileno}</TableCell>
+                <TableCell align="right">
+                  <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                    <FormGroup>
+                      <Switch
+                        checked={row.active}
+                        onChange={async (e) => {
+                          const response = await changeActive(row.id, e.target.checked);
+                          if (response.status === "success") {
+                            toast.success(response.message);
+                          }
+                          if (response.status === "unsuccess") {
+                            toast.error(response.message);
+                          }
+                          setUserList(
+                            userList.map((item) => (item.id === row.id ? { ...item, active: e.target.checked } : item))
+                          );
+                        }}
+                      />
+                    </FormGroup>
+                  </div>
+                </TableCell>
+                <TableCell align="right">
+                  <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                    <div onClick={() => editRecord(row.id)}>
+                      <EditIcon />
+                    </div>
+                    <div onClick={() => deleteRecord(row.id)}>
+                      <DeleteIcon />
+                    </div>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <ToastContainer />
+      </TableContainer>
+    </>
   );
 };
 

@@ -1,29 +1,38 @@
-import AddUser from "./adduser/AddUser";
-import ListUser from "./listuser/ListUser";
+import GroupIcon from "@mui/icons-material/Group";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import BabyChangingStationIcon from "@mui/icons-material/BabyChangingStation";
+import LogoutIcon from "@mui/icons-material/Logout";
 
-import ListIcon from "@mui/icons-material/List";
-import AddIcon from "@mui/icons-material/Add";
-// import AddPetSitter from "./petsitter/addpetsitter/AddPetSitter";
+import DashboardScreen from "./DashboardScreen";
+import ListUser from "../users/listuser/ListUser";
+import ListPetSitter from "../petsitters/listpetsitter/ListPetSitter";
+import Logout from "../logout/Logout";
 
 const routes = [
   {
-    tag: "addUser",
-    component: AddUser,
-    text: "Add User",
-    icon: AddIcon,
+    tag: "DASHBOARD",
+    icon: DashboardIcon,
+    component: DashboardScreen,
+    text: "Dashboard",
   },
   {
-    tag: "listUsers",
+    tag: "USERS",
+    icon: GroupIcon,
     component: ListUser,
-    text: "List Users",
-    icon: ListIcon,
+    text: "Users",
   },
-  // {
-  //   tag: "addPetSitter",
-  //   component: AddPetSitter,
-  //   text: "Add Pet Sitter",
-  //   icon: AddIcon,
-  // },
+  {
+    tag: "PETSITTER",
+    icon: BabyChangingStationIcon,
+    component: ListPetSitter,
+    text: "Pet Sitter",
+  },
+  {
+    tag: "LOGOUT",
+    icon: LogoutIcon,
+    component: Logout,
+    text: "Logout",
+  },
 ];
 
 export default routes;
