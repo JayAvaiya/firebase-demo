@@ -70,7 +70,7 @@ const Dashboard = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Responsive drawer
+            Firebase Demo
           </Typography>
         </Toolbar>
       </AppBar>
